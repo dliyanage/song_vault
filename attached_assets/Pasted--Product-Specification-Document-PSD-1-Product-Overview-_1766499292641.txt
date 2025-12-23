@@ -1,0 +1,228 @@
+# Product Specification Document (PSD)
+
+## 1. Product Overview
+
+**Product Name (Working):** SongVault
+
+**Purpose:**
+SongVault is a lightweight, web-hosted song library designed for musicians, worship teams, and performers who need quick access to song lyrics and chords. The application starts with an empty library and allows users to add songs with optional lyrics and/or chord images. Users can search for songs and view lyrics or chords in a distraction-free, full-screen mode.
+
+**Target Platform:**
+Web (hosted on Replit)
+
+**Target Users:**
+
+* Musicians and singers
+* Worship leaders and bands
+* Music students
+
+---
+
+## 2. Goals & Non-Goals
+
+### Goals
+
+* Provide a fast and minimal interface for storing and retrieving songs
+* Support image-based lyrics and chord sheets
+* Enable quick search and full-screen viewing during practice or performance
+* Be simple to deploy and run on Replit
+
+### Non-Goals
+
+* No audio playback or recording (initial version)
+* No advanced user authentication (single-user or simple mode)
+* No collaborative editing (v1)
+
+---
+
+## 3. User Flow Summary
+
+1. User lands on Home page (empty state if no songs)
+2. User clicks **Add Song**
+3. User enters song metadata and uploads optional images
+4. Song is saved to the library
+5. User searches for a song
+6. If found, song result page shows **Lyrics** and/or **Chords** tiles
+7. User selects a tile
+8. Selected image opens in full-screen view with song key visible
+9. User can navigate back to song results or Home
+
+---
+
+## 4. Core Features
+
+### 4.1 Home Page
+
+**Components:**
+
+* App title/logo
+* Search bar (primary focus)
+* "Add Song" button
+
+**Empty State:**
+
+* Message: "No songs in your library yet"
+* Call-to-action: "Add your first song"
+
+---
+
+### 4.2 Add Song
+
+**Fields:**
+
+* Song Title (required)
+* Artist / Notes (optional)
+* Song Key (optional, e.g., C, Gm, D♭)
+* Upload Lyrics Image (optional)
+* Upload Chords Image (optional)
+
+**Validation Rules:**
+
+* At least one of Lyrics or Chords image must be uploaded
+* Accept image formats: JPG, PNG
+
+**Actions:**
+
+* Save Song
+* Cancel / Back to Home
+
+---
+
+### 4.3 Search Songs
+
+**Search Behavior:**
+
+* Case-insensitive search by song title
+* Partial match supported
+
+**Results:**
+
+* If no match: "Song not found"
+* If match found: clickable song card
+
+---
+
+### 4.4 Song Result Page
+
+**Displayed Information:**
+
+* Song title
+* Song key
+
+**Tiles (conditionally rendered):**
+
+* Lyrics Tile (shown only if lyrics image exists)
+* Chords Tile (shown only if chords image exists)
+
+**Actions:**
+
+* Select Lyrics or Chords
+* Back to Search
+
+---
+
+### 4.5 Full-Screen Viewer
+
+**Layout:**
+
+* Full-screen image viewer
+* Song key displayed on the side or corner
+
+**Controls:**
+
+* Back button
+* Home button
+
+**Behavior:**
+
+* Image scales to fit screen
+* No distractions (minimal UI)
+
+---
+
+## 5. Navigation
+
+* Persistent Home button
+* Browser back support
+* Clear Back buttons on all non-home pages
+
+---
+
+## 6. Data Model (High-Level)
+
+### Song
+
+* `id`: unique identifier
+* `title`: string
+* `artist`: string (optional)
+* `key`: string (optional)
+* `lyricsImageUrl`: string (optional)
+* `chordsImageUrl`: string (optional)
+* `createdAt`: timestamp
+
+---
+
+## 7. Technical Architecture (Replit-Friendly)
+
+### Frontend
+
+* HTML / CSS / JavaScript
+* Optional framework: React or Vanilla JS
+* Responsive design for tablets and laptops
+
+### Backend
+
+* Node.js + Express (recommended)
+* REST API for CRUD operations
+
+### Storage
+
+* Replit file system or simple JSON store (v1)
+* Image uploads stored locally or via Replit DB
+
+---
+
+## 8. API Endpoints (Indicative)
+
+* `POST /songs` – Add a new song
+* `GET /songs?query=` – Search songs
+* `GET /songs/:id` – Retrieve song details
+
+---
+
+## 9. UX & UI Principles
+
+* Minimal and distraction-free
+* Large touch-friendly buttons
+* High contrast for stage visibility
+* Fast navigation (≤2 clicks to content)
+
+---
+
+## 10. Future Enhancements (Out of Scope for v1)
+
+* PDF support
+* Audio playback
+* Transpose key feature
+* User authentication
+* Cloud sync and sharing
+
+---
+
+## 11. Success Metrics
+
+* Time to open a song ≤ 2 seconds
+* Ability to add and retrieve songs without errors
+* Smooth full-screen viewing experience
+
+---
+
+## 12. Open Questions
+
+* Single-user vs multi-user mode?
+* Offline support needed?
+* Mobile phone optimization priority?
+
+---
+
+**End of PSD**
