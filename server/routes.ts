@@ -41,6 +41,27 @@ export async function registerRoutes(
     }
   });
 
+  // Update song
+  app.put(api.songs.update.path, async (req, res) => {
+    try {
+      const song = await storage.getSong(Number(req.params.id));
+      if (!song) {
+        return res.status(404).json({ message: 'Song not found' });
+      }
+      const input = api.songs.update.input.parse(req.body);
+      const updatedSong = await storage.updateSong(Number(req.params.id), input);
+      res.json(updatedSong);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({
+          message: err.errors[0].message,
+          field: err.errors[0].path.join('.'),
+        });
+      }
+      throw err;
+    }
+  });
+
   // Delete song
   app.delete(api.songs.delete.path, async (req, res) => {
     const song = await storage.getSong(Number(req.params.id));
